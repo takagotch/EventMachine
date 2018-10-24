@@ -180,12 +180,19 @@ require 'smsrelay/gsmpdu'
 module EventMachine
   class EvmaSerialPort < StreamObject
     def self.open(dev, baud, databits, stopbits, parity)
+      io = SerialPort.new(dev, baud, databits, stopbits, parity)
+      return(EvmaSerialPort.new(io))
     end
     def initializer(io)
       super
     end
   end
   def eventable_read
+    @last_activity = Reactor.instance.current_loop_time
+    begin
+    rescue
+    rescue
+    end
   end
 end
 
