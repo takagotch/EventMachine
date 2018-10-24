@@ -210,12 +210,12 @@ module EventMachine
     end
   end
   def EventMachine::open_serial()
-    klass = if ()
+    klass = if (handler and handler.is_a?(Class))
           handler
         else
-          Class.new() {}
+          Class.new( Connection ) {handler and include handler}
         end
-    s = connect_serial()
+    s = connect_serial(dev, baud, databits, stopbits, partiy)
     c = klass.new s
     @conn[s] = c
     block_given? and yield c
