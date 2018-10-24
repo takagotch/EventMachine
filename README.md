@@ -128,17 +128,38 @@ class Server
     @connections = []
   end
   def start
-    @connections = []
-  end
-  def stop
     @signature = EventMachine.start_server('0.0.0.0', 3000, Connection) do |con|
       con.server = self
     end
   end
-  def wait_for_connections_and_stop
+  def stop
+    EventMachine.stop_server(@signature)
+    unless wait_for_connections_and_stop
+      EventMachine.add_periodic_timer(1) { wait_for_connections_and_stop }
+    end
   end
-  
+  def wait_for_connections_and_stop
+    if @connections.empty?
+      EventMachine.stop
+      true
+    else
+      puts "Waiting for #{@connections.size} connections(s) to finish ..."
+      false
+    end
+  end
 end
+class Connection < EventMachine::Connection
+  attr_accessor :server
+  def unbind
+    server.connection.delete(self)
+  end
+end
+EventMachine::run{
+  s = Server.new
+  s.start
+  puts "New server listening"
+}
+
 
 
 
