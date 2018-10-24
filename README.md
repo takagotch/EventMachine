@@ -191,7 +191,13 @@ module EventMachine
     @last_activity = Reactor.instance.current_loop_time
     begin
       if io.respond_to?(:read_nonblock)
+        10.times {
+          data = io.read_nonblock(4096)
+          EventMachine::event_callback uuid, ConnectionData, data
+        }
       else
+        data = io.sysread(4096)
+        EventMachine::event_callback uuid, ConnectionData, data
       end
     rescue
     rescue
