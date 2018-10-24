@@ -173,6 +173,17 @@ require 'socket'
 port, ip = Socket.unpack_sockaddr_in(get_peername)
 
 
+$eventmachine_library = :pure_ruby
+require 'eventmachine'
+gem_original_require 'serialport'
+require 'smsrelay/gsmpdu'
+module EventMachine
+  class EvmaSerialPort < StreamObject
+  end
+  def eventable_read
+  end
+end
+
 
 
 ```
