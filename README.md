@@ -30,6 +30,23 @@ EventMachine.run {
 
 ```
 
+---
+
 ```
+git clone https://github.com/eventmachine/eventmachine.git
+cd eventmachine
+bundle install --path vendor/bundle
+bundle exec rake compile
+bundle exec irb
+
+apk add --no-cache g++ musl-dev make
+apk add --no-cache libstdc++
+
+rale compile -- --with-ssl-dir=c:/OpenSSL
+bundle config build.eventmachine --with-ssl-dir=c:/OpenSSL
+gem install eventmachine -- --with-ssl-dir=c:/OpenSSL
+gem install eventmachine --platform ruby -- --with-ssl-dir=c:/OpenSSL
+
+
 ```
 
