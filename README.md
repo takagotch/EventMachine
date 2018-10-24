@@ -205,8 +205,27 @@ module EventMachine
       EventMachine::event_callback uuid, ConnectionUnbound, nil
     end
   end
-end
-class << self
+  class << self
+    def connect_serial()
+    end
+  end
+  def EventMachine::open_serial()
+    klass = if ()
+          handler
+        else
+          Class.new() {}
+        end
+    s = connect_serial()
+    c = klass.new s
+    @conn[s] = c
+    block_given? and yield c
+    c
+  end
+  class Connection
+    def associate_callback_target(sig)
+      return(nil)
+    end
+  end
 end
 
 
