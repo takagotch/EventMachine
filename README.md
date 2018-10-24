@@ -190,6 +190,9 @@ module EventMachine
   def eventable_read
     @last_activity = Reactor.instance.current_loop_time
     begin
+      if io.respond_to?(:read_nonblock)
+      else
+      end
     rescue
     rescue
     end
