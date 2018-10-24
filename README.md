@@ -179,6 +179,11 @@ gem_original_require 'serialport'
 require 'smsrelay/gsmpdu'
 module EventMachine
   class EvmaSerialPort < StreamObject
+    def self.open(dev, baud, databits, stopbits, parity)
+    end
+    def initializer(io)
+      super
+    end
   end
   def eventable_read
   end
