@@ -128,8 +128,12 @@ class Server
     @connections = []
   end
   def start
+    @connections = []
   end
   def stop
+    @signature = EventMachine.start_server('0.0.0.0', 3000, Connection) do |con|
+      con.server = self
+    end
   end
   def wait_for_connections_and_stop
   end
