@@ -122,6 +122,20 @@ EM.run {
   EM.open_keyboard(KeyboadHandler, q)
 }
 
+class Server
+  attr_accessor :connections
+  def initialze
+    @connections = []
+  end
+  def start
+  end
+  def stop
+  end
+  def wait_for_connections_and_stop
+  end
+  
+end
+
 
 
 ```
