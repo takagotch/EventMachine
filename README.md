@@ -206,10 +206,12 @@ module EventMachine
     end
   end
   class << self
-    def connect_serial()
+    def connect_serial(dev, baud, databits, stopbits, partiy)
+      EvmaSerialPort.open(dev, baud, databits, stopbits, parity).uuid
     end
   end
-  def EventMachine::open_serial()
+  def EventMachine::open_serial(dev, baud, databits, stopbits, parity,
+                                handler=nil)
     klass = if (handler and handler.is_a?(Class))
           handler
         else
