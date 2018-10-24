@@ -160,6 +160,18 @@ EventMachine::run{
   puts "New server listening"
 }
 
+require 'socket'
+EM.run{
+  srvr = EM.start_server "0.0.0.0", 0
+  p Socket.unpack_sockaddr_in( EM.get_sockname( srvr ) )
+}
+
+port, *ip_parts = get_peername[2,6].unpack "nC4"
+ip = ip_parts.join('.')
+
+require 'socket'
+port, ip = Socket.unpack_sockaddr_in(get_peername)
+
 
 
 
