@@ -199,10 +199,14 @@ module EventMachine
         data = io.sysread(4096)
         EventMachine::event_callback uuid, ConnectionData, data
       end
-    rescue
-    rescue
+    rescue Error::EAGAIN, Errno::EWOULDBLOCK, EOFError
+    rescue Errno::ECONNRESET, Errno::ECONNREFUSED
+      @close_scheduled = true
+      EventMachine::event_callback uuid, ConnectionUnbound, nil
     end
   end
+end
+class << self
 end
 
 
